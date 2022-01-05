@@ -18,9 +18,6 @@ if(!fs.existsSync('music.json')){
     fs.writeFileSync('music.json' , '[]');
 }
 
-// בפקודה זו ניגשים לדף הראשי עם פקודת GET 
-// ואנו אמורים לקבל את אותו הדף של אינדקס.HTML 
-// שולחים את המערך של השירים אל הלקוח
 // fs.readFileSync('music.json').toString(); - ממיר לי את הקובץ מגייסון לסטרינג
 app.get('/all',(req,res)=>{
     let musicRes = fs.readFileSync('music.json').toString();
@@ -31,16 +28,12 @@ app.get('/all',(req,res)=>{
 })
 
 
-// מקבלים שיר חדש מהלקוח ומוסיפים אותו למערך וגם מעדכנים בקובץ
 app.post('/add',(req,res)=>{
 
-    // מקבלים את כל המערך מהקובץ וממירים אותו למערך JSON 
     let musicArr = fs.readFileSync('music.json').toString();
     musicArr = JSON.parse(musicArr);
-    // מוסיפים את השיר החדש שהתקבל מהבקשה - req.body אל תוך המערך
     musicArr.push(req.body);
 
-    // מוסיפים מערך חדש אל הקובץ 
     fs.writeFileSync('music.json',JSON.stringify(musicArr));
 
     res.status(201); // created
